@@ -1,6 +1,6 @@
-return {
+return
+{
     {
-        "shaunsingh/nord.nvim",
-        lazy = true
+        "shaunsingh/nord.nvim", -- or "gbprod/nord.nvim",
     }
 }

@@ -1,6 +1,17 @@
-return {
+return
+{
     {
         "rebelot/kanagawa.nvim",
-        lazy = true
+        opts =
+        {
+            compile = true,
+            theme = "wave",
+            background =
+            {
+                dark = "wave",
+                light = "lotus",
+            },
+        },
     }
 }
+

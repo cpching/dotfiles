@@ -5,10 +5,10 @@
 local settings = require('settings')
 
 -- Function to load the colorscheme configuration
-local function load_colorscheme(scheme)
-  local ok, scheme_module = pcall(require, 'plugins.colorschemes.' .. scheme)
+local function load_colorscheme(colorscheme)
+  local ok, scheme_module = pcall(require, 'plugins.colorschemes.' .. colorscheme)
   if not ok then
-    vim.notify("Colorscheme module 'plugins.colorscheme." .. scheme .. "' not found!", vim.log.levels.ERROR)
+    vim.notify("Colorscheme module 'plugins.colorscheme." .. colorscheme .. "' not found!", vim.log.levels.ERROR)
     return {}
   end
   return scheme_module
