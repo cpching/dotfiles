@@ -1,17 +1,15 @@
 return
 {
+    "rebelot/kanagawa.nvim",
+    opts =
     {
-        "rebelot/kanagawa.nvim",
-        opts =
+        compile = true,
+        theme = "wave",
+        background =
         {
-            compile = true,
-            theme = "wave",
-            background =
-            {
-                dark = "wave",
-                light = "lotus",
-            },
+            dark = "wave",
+            light = "lotus",
         },
-    }
+    },
 }
 

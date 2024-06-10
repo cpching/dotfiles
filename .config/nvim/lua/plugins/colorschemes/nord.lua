@@ -1,6 +1,4 @@
 return
 {
-    {
-        "shaunsingh/nord.nvim", -- or "gbprod/nord.nvim",
-    }
+    "shaunsingh/nord.nvim", -- or "gbprod/nord.nvim",
 }
