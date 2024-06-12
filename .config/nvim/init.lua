@@ -1,11 +1,15 @@
--- leader key setting
+-- set leader key
 vim.g.mapleader = ';'
 
+-- load lua/options.lua, lua/keymaps.lua, and lua/plugin-manager.lua
 require("options")
 require("keymaps")
 require("plugin-manager")
 
+-- load lua/settings.lua which contains shared configuration values, including the desired colorscheme
 local settings = require("settings")
+
+-- set colorscheme
 vim.cmd('colorscheme ' .. settings.colorscheme)
 
 -- restore cursor position
