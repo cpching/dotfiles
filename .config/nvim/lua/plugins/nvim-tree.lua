@@ -38,32 +38,39 @@ end
 
 return
 {
+    "nvim-tree/nvim-tree.lua",
+    version = "*",
+    dependencies = {"nvim-tree/nvim-web-devicons"},
+    event = "VeryLazy",
+    keys = {
+        {"<leader>n", "<CMD>NvimTreeToggle<CR>" },
+    },
+    opts =
     {
-        "nvim-tree/nvim-tree.lua",
-        version = "*",
-        dependencies = {"nvim-tree/nvim-web-devicons"},
-        event = "VeryLazy",
-        keys = {
-            {"<leader>n", "<CMD>NvimTreeToggle<CR>" },
+        on_attach = on_attach,
+        view = {
+            width = 25,
         },
-        opts = 
-        {
-            on_attach = on_attach,
-            view = {
-                width = 25
-            },
-            actions = {
-                open_file = {
-                    quit_on_open = false,
+        actions = {
+            open_file = {
+                quit_on_open = false,
+                window_picker = {
+                    enable = false,
                 },
             },
-            filters = {
-                dotfiles = false,
-                git_clean = false,
-                no_buffer = false,
-                git_ignored = false,
-                custom = { 'node_modules' },
-            },
         },
-    }
+        filters = {
+            dotfiles = false,
+            git_clean = false,
+            no_buffer = false,
+            git_ignored = false,
+            custom = { 'node_modules' },
+        },
+    },
+    config = function(_, opts)
+        local nvimtree = require("nvim-tree")
+        vim.g.loaded_netrw = 1
+        vim.g.loaded_netrwPlugin = 1
+        nvimtree.setup(opts)
+    end
 }
