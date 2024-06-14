@@ -18,13 +18,13 @@ brew install neovim
 ``` lua
 ~/.config/nvim
 |-- init.lua # [or init.vim (https://neovim.io/doc/user/lua-guide.html#lua-guide-config)]
-    |-- lua/
-|-- module_a.lua # (e.g. keymaps.lua or options.lua) 
+|-- lua/
+    |-- module_a.lua # (e.g. keymaps.lua or options.lua) 
     |-- plugin-manager.lua
     |-- plugins/
-    |-- init.lua 
-    |-- plugin_a.lua
-    |-- plugin_b.lua
+        |-- init.lua 
+        |-- plugin_a.lua
+        |-- plugin_b.lua
 ```
 
 ## [Lua Modules](https://neovim.io/doc/user/lua-guide.html#lua-guide-modules)   
@@ -131,12 +131,12 @@ end
 ~/.config/nvim
 |-- init.lua
 |-- lua/
-|-- keymaps.lua
-|-- options.lua
-|-- plugin-manager.lua
-|-- plugins/
-|-- plugin_a.lua
-|-- plugin_b.lua
+    |-- keymaps.lua
+    |-- options.lua
+    |-- plugin-manager.lua
+    |-- plugins/
+        |-- plugin_a.lua
+        |-- plugin_b.lua
 ```
 ## Installation   
 - Add the following Lua code to bootstrap **lazy.nvim**   
