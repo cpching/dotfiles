@@ -1,11 +1,11 @@
 # Introduction   
 - This note is written to help you configure Neovim using Lua. It includes the following sections:   
-- **Installation**: Instructions for installing Neovim   
-- **Using Lua**: How to load Lua modules in Neovim   
-- **Key Mappings**: Mapping Vim commands or Lua functions to key sequences   
-- **Options**: Setting useful options clearly via Lua   
-- **Plugin** **Manager** **-** **Lazy**: Installing and configuring Lazy to manage plugins   
-- **Plugins**: Useful plugins and their configurations   
+    - **Installation**: Instructions for installing Neovim   
+    - **Using Lua**: How to load Lua modules in Neovim   
+    - **Key Mappings**: Mapping Vim commands or Lua functions to key sequences   
+    - **Options**: Setting useful options clearly via Lua   
+    - **Plugin** **Manager** **-** **Lazy**: Installing and configuring Lazy to manage plugins   
+    - **Plugins**: Useful plugins and their configurations   
 
 # Installation   
 ``` lua
