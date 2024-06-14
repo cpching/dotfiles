@@ -28,8 +28,8 @@ brew install neovim
 ```
 
 ## [Lua Modules](https://neovim.io/doc/user/lua-guide.html#lua-guide-modules)   
-    - Lua modules are found inside a `lua/` folder in your `'runtimepath'` (for most users, this will mean `~/.config/nvim/lua` on \*NIX systems and `~/AppData/Local/nvim/lua` on Windows). You can `require()` files in this folder as Lua modules.   
-    - Place `Lua` files in the `lua` directory in `‘runtimepath’` and load them with require   
+- Lua modules are found inside a `lua/` folder in your `'runtimepath'` (for most users, this will mean `~/.config/nvim/lua` on \*NIX systems and `~/AppData/Local/nvim/lua` on Windows). You can `require()` files in this folder as Lua modules.   
+- Place `Lua` files in the `lua` directory in `‘runtimepath’` and load them with require   
 - Load `module\_a.luad` (inside the `lua/` folder)   
     ``` lua
     require("module_a")
@@ -44,7 +44,6 @@ brew install neovim
     ``` lua
     require('plugins')
     ```
-
 
 # Key Mappings   
 - You can customize Neovim's key bindings by mapping either Vim commands or Lua functions to key sequences   
