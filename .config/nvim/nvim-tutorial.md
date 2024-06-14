@@ -30,11 +30,11 @@ brew install neovim
 ## [Lua Modules](https://neovim.io/doc/user/lua-guide.html#lua-guide-modules)
 - Lua modules are found inside a `lua/` folder in your `'runtimepath'` (for most users, this will mean `~/.config/nvim/lua` on *NIX systems and `~/AppData/Local/nvim/lua` on Windows). You can `require()` files in this folder as Lua modules.
 - Place `Lua` files in the `lua` directory in `‘runtimepath’` and load them with require
-- Load `module\_a.luad` (inside the `lua/` folder)
+- Load `module_a.luad` (inside the `lua/` folder)
     ``` lua
     require("module_a")
     ```
-- Load `plugins/plugin\_a.lua` (inside the `lua/` folder)
+- Load `plugins/plugin_a.lua` (inside the `lua/` folder)
     ``` lua
     require('plugins/plugin_a')
     -- or
@@ -52,8 +52,8 @@ brew install neovim
     - Load the file in `init.lua`
 
 ## keymap function in Lua
-- Neovim's API `[vim.api.nvim\_set\_keymap](https://neovim.io/doc/user/api.html#nvim_set_keymap())` sets a global mapping for the given mode
-- Function interface: `nvim\_set\_keymap( {mode}, {lhs}, {rhs}, {opts})`
+- Neovim's API `[vim.api.nvim_set_keymap](https://neovim.io/doc/user/api.html#nvim_set_keymap())` sets a global mapping for the given mode
+- Function interface: `nvim_set_keymap( {mode}, {lhs}, {rhs}, {opts})`
     - `mode`: Mode short-name (e.g. n, i, v, …) 要綁定的 mode
     - `lhs`: Left-hand-side of the mapping. 要把什麼 key 綁定功能（之後使用的快捷鍵）
     - `rhs`: Right-hand-side f the mapping. 要綁定什麼功能
@@ -63,7 +63,7 @@ brew install neovim
 
 ### Code in `keymaps.lua`
 - Assign a variable `keymap` to hold a reference to the function
-    `local keymap = vim.api.nvims\_set\_keymap`
+    `local keymap = vim.api.nvims_set_keymap`
 - Assign a variable `opts`  to hold opts arguments
     `local opts = { noremap = true, silent = true }`
 - Call `keymap` function
