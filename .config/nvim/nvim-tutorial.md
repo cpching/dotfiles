@@ -28,7 +28,7 @@ brew install neovim
 ```
 
 ## [Lua Modules](https://neovim.io/doc/user/lua-guide.html#lua-guide-modules)
-- Lua modules are found inside a `lua/` folder in your `'runtimepath'` (for most users, this will mean `~/.config/nvim/lua` on \*NIX systems and `~/AppData/Local/nvim/lua` on Windows). You can `require()` files in this folder as Lua modules.
+- Lua modules are found inside a `lua/` folder in your `'runtimepath'` (for most users, this will mean `~/.config/nvim/lua` on *NIX systems and `~/AppData/Local/nvim/lua` on Windows). You can `require()` files in this folder as Lua modules.
 - Place `Lua` files in the `lua` directory in `‘runtimepath’` and load them with require
 - Load `module\_a.luad` (inside the `lua/` folder)
     ``` lua
@@ -160,7 +160,7 @@ end
 - I add the code in the file `lua/plugin-manager.lua` and load them by `require("plugin-manager.lua")` in `~/.config/nvim/init.lua`
 
 ## Installation of Plugins
-- Add different configuration files (\*.lua) to `lua/plugins/`
+- Add different configuration files (*.lua) to `lua/plugins/`
 - The shortest spec for installing a plugin
     ``` lua
     return
@@ -178,8 +178,8 @@ end
     - `Control+V` 可以進入 VISUAL BLOCK mode
 - 在 VISUAL BLOCK mode 下
     - **選擇多行後可以利用`I`（大寫）一次插入相同內容到多行中**（也可以利用其它字元進行其它操作）
-- 在 VISUAL \* mode 下
-    - `"\*y` 可以複製目前所選的東西進 clipboard
+- 在 VISUAL * mode 下
+    - `"*y` 可以複製目前所選的東西進 clipboard
 - 在 NORMAL mode 下
     - `yi`/`di`/`ci` + pair (e.g. `()`, `{}`, `""`)
         - 任一端可以將 pair 內的文字複製/刪除/刪除並進入 INSERT mode
