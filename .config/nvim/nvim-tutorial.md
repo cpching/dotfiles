@@ -5,7 +5,7 @@
     - **Key Mappings**: Mapping Vim commands or Lua functions to key sequences
     - **Options**: Setting useful options clearly via Lua
     - **Plugin** **Manager** **-** **Lazy**: Installing and configuring Lazy to manage plugins
-    - **Plugins**: Useful plugins and their configurations
+    - **Useful Tips**: Essential Vi tips without using any plugins
 
 # Installation
 ``` lua
@@ -15,7 +15,7 @@ brew install neovim
 
 # Using Lua
 ## Directory Structure (Example)
-``` lua
+``` bash
 ~/.config/nvim
 |-- init.lua # [or init.vim (https://neovim.io/doc/user/lua-guide.html#lua-guide-config)]
 |-- lua/
@@ -126,7 +126,7 @@ vim.api.nvim_set_keymap("n", "<C-\\>", "<CMD>lua Close_buffer_or_window()<CR>", 
 
 # Plugin Manager - Lazy
 ## Directory Structure (Mine)
-``` lua
+``` bash
 ~/.config/nvim
 |-- init.lua
 |-- lua/
@@ -178,8 +178,17 @@ vim.api.nvim_set_keymap("n", "<C-\\>", "<CMD>lua Close_buffer_or_window()<CR>", 
 - 在 VISUAL BLOCK mode 下
     - **選擇多行後可以利用`I`（大寫）一次插入相同內容到多行中**（也可以利用其它字元進行其它操作）
 - 在 VISUAL * mode 下
-    - `"*y` 可以複製目前所選的東西進 clipboard
+    - `"*y` 
+        - 複製目前所選的東西進 clipboard
+    - `U`（大寫）/`u`
+        - 將所選文字轉成大寫/小寫
 - 在 NORMAL mode 下
+    - `I`/`A`（大寫）
+        - 將 cursor 移至行首/尾進入 INSERT mode
+    - `C`（大寫）
+        - 刪除並複製目前 cursor 至行尾的文字然後進入 INSERT mode
+    - `D`/`Y`（大寫）
+        - 刪除/複製目前 cursor 至行尾的文字
     - `yi`/`di`/`ci` + pair (e.g. `()`, `{}`, `""`)
         - 任一端可以將 pair 內的文字複製/刪除/刪除並進入 INSERT mode
     - `ya`/`da`/`ca` + pair (e.g. `()`, `{}`, `""`)
