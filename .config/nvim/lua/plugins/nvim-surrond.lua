@@ -1,3 +1,5 @@
+-- Plugin `nvim-surround` enhances text manipulation by providing operators to surround text with pairs of characters (e.g., parentheses, quotes).
+
 return
 {
     "kylechui/nvim-surround",

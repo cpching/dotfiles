@@ -1,3 +1,4 @@
+-- Plugin `lualine.nvim` provides a customizable statusline that displays key information such as mode, file status, and more.
 return
 {
     {

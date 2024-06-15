@@ -1,10 +1,14 @@
+-- Plugin `mason` provides an easy way to install and mange LSP servers, DAP servers, linters, and formatters.
+-- Plugin `mason-lspconfig` simplifies the integration of lspconfig with the `mason` plugin.
+-- Plugin `nvim-lspconfig` integrates various LSP servers.
+
 local language_servers = {
     "lua_ls",
-    "clangd",  -- C/C++
+    "clangd",
     "html",
     "tsserver",
     "golangci_lint_ls",
-    "gopls"
+    "gopls",
 }
 
 return
@@ -38,11 +42,14 @@ return
         enabled = true,
         dependencies = {"williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = function ()
+            -- Function to run when attaching to a new buffer with an LSP client.
             local on_attach = function(client, bufnr)
                 if client.name == "tsserver" then
                     client.server_capabilities.documentFormattingProvider = false
                 end
+                -- Keymap options
                 local opts = { noremap = true, silent = true }
+                -- Keymap api
                 local buf_keymap = vim.api.nvim_buf_set_keymap
                 buf_keymap(bufnr, "n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
                 buf_keymap(bufnr, "n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
@@ -55,26 +62,20 @@ return
                 buf_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
                 buf_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
                 vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-                --  lsp_keymaps(bufnr)
                 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
                 -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-                -- lsp_highlight_document(client)
             end
 
-            -- The nvim-cmp almost supports LSP's capabilities so You should advertise it to LSP servers..
+            -- The `nvim-cmp` almost supports LSP's capabilities so You should advertise it to LSP servers..
             local capabilities
             local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
             if status_ok then
                 capabilities = cmp_nvim_lsp.default_capabilities()
             end
 
-            local opts = {
-                on_attach = on_attach,
-                capabilities = capabilities,
-            }
-
             local lspconfig = require('lspconfig')
 
+            -- Define diagnostic signs for error, warning, hint, and info.
             local signs = {
                 { name = "DiagnosticSignError", text = "" },
                 { name = "DiagnosticSignWarn", text = "" },
@@ -84,6 +85,8 @@ return
             for _, sign in ipairs(signs) do
                 vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
             end
+
+            -- Define diagnostic configuration for virtual text, signs, and float windows.
             local config = {
                 virtual_text = true,
                 signs = {
@@ -102,7 +105,10 @@ return
                 },
             }
 
+            -- Configure diagnostics with defined settings.
             vim.diagnostic.config(config)
+
+            -- Customize hover and signature help handlers for LSP.
             vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
                 border = "rounded",
             })
@@ -111,7 +117,12 @@ return
                 border = "rounded",
             })
 
+            local opts = {
+                on_attach = on_attach,
+                capabilities = capabilities,
+            }
 
+            -- Setup LSP servers based on predefined configurations.
             for _, language_server in pairs(language_servers) do
                 language_server = vim.split(language_server, "@")[1]
                 local require_ok, conf_opts = pcall(require, "plugins.language-settings." .. language_server)

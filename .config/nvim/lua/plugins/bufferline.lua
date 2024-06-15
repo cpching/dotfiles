@@ -1,3 +1,6 @@
+ --[[ Plugin `bufferline` provides a customizable and visually appealing buffer line at the top of Neovim.
+      It displays all open buffers (files) in a tab-like interface, making it easier to switch between them. ]]
+
 return
 {
     'akinsho/bufferline.nvim',

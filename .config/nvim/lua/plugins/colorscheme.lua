@@ -1,5 +1,4 @@
--- colorscheme.lua
--- Load the selected colorscheme dynamically
+-- This configuration loads the selected colorscheme dynamically
 
 -- Import the settings module to get the selected colorscheme
 local settings = require('settings')

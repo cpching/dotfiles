@@ -1,3 +1,6 @@
+--[[ Plugnin `nvim-tree` provides a tree-like view of directory structure
+        It allows directory navigation, file operation, and can display Git status indicators for files ]]
+
 -- auto close tree when all files in buffer are closed
 vim.api.nvim_create_autocmd("BufEnter", {
     nested = true,
@@ -30,7 +33,7 @@ local function on_attach(bufnr)
     -- default mappings
     api.config.mappings.default_on_attach(bufnr)
 
-    -- custom mappings
+    -- custom key mappings
     vim.keymap.set('n', 'u',     api.tree.change_root_to_parent, opts('Up'))
     vim.keymap.set('n', '<C-a>', api.fs.rename_full,             opts('Rename: Full Path'))
     vim.keymap.set('n', '?',     api.tree.toggle_help,           opts('Help'))
@@ -74,3 +77,4 @@ return
         nvimtree.setup(opts)
     end
 }
+

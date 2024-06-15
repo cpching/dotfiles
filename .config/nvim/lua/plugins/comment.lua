@@ -1,3 +1,5 @@
+-- Plugin `Comment` improves the commenting workflow in Neovim by providing toggling.
+
 return
 {
     "numToStr/Comment.nvim",
@@ -8,7 +10,7 @@ return
     opts = {
         sticky = false,
         toggler = {
-            line = '<C-_>'
+            line = '<C-_>' -- Use Ctrl+_ (Ctrl+/) as the shortcut to toggle comments on the current line.
         },
     },
     config = function(_, opts)
@@ -23,3 +25,4 @@ return
         comment.setup(opts)
     end,
 }
+
