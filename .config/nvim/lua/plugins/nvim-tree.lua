@@ -1,5 +1,5 @@
 --[[ Plugnin `nvim-tree` provides a tree-like view of directory structure
-        It allows directory navigation, file operation, and can display Git status indicators for files ]]
+It allows directory navigation, file operation, and can display Git status indicators for files ]]
 
 -- auto close tree when all files in buffer are closed
 vim.api.nvim_create_autocmd("BufEnter", {
@@ -75,6 +75,12 @@ return
         vim.g.loaded_netrw = 1
         vim.g.loaded_netrwPlugin = 1
         nvimtree.setup(opts)
+
+        vim.api.nvim_create_autocmd({"BufWinEnter", "BufEnter"}, {
+            callback = function()
+                    if vim.bo.filetype == 'NvimTree' then vim.wo.statuscolumn = " " end
+            end
+        })
     end
 }
 
