@@ -179,10 +179,12 @@ vim.api.nvim_set_keymap("n", "<C-\\>", "<CMD>lua Close_buffer_or_window()<CR>", 
     - **選擇多行後可以利用`I`（大寫）一次插入相同內容到多行中**（也可以利用其它字元進行其它操作）
 - 在 VISUAL * mode 下
     - `"*y` 
-        - 複製目前所選的東西進 clipboard
+        - 複製所選的文字進 clipboard
     - `U`（大寫）/`u`
         - 將所選文字轉成大寫/小寫
 - 在 NORMAL mode 下
+    - `"*yy` 
+        - 複製目前這行的文字進 clipboard
     - `I`/`A`（大寫）
         - 將 cursor 移至行首/尾進入 INSERT mode
     - `C`（大寫）
@@ -209,5 +211,7 @@ vim.api.nvim_set_keymap("n", "<C-\\>", "<CMD>lua Close_buffer_or_window()<CR>", 
 - 在 INSERT mode 下
     - Control+o
         - 暫時進入 NORMAL mode
+    - Control+y
+        - 複製貼上上一行的字元
 - 搜尋時加入 `\c` 字元可以忽略後面字串的大小寫
 

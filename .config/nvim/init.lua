@@ -16,4 +16,3 @@ vim.cmd('colorscheme ' .. settings.colorscheme)
 if vim.fn.has("autocmd") then
     vim.cmd([[ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]])
 end
-
