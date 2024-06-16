@@ -3,10 +3,12 @@ return
     "nvim-telescope/telescope.nvim",
     -- branch = "0.1.x",
     dependencies = {
-        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope-ui-select.nvim",
         "nvim-telescope/telescope-fzf-native.nvim",
+        "nvim-lua/plenary.nvim",
         "nvim-tree/nvim-web-devicons",
         "folke/todo-comments.nvim",
+        "nvim-treesitter/nvim-treesitter"
     },
     config = function()
         local telescope = require("telescope")
@@ -18,12 +20,28 @@ return
                 mappings = {
                     i = {
                         ["<M-k>"] = actions.move_selection_previous, -- move to prev result
-                        ["<M-j>"] = actions.move_selection_next, -- move to next result
+                        ["<M-j>"] = actions.move_selection_next,     -- move to next result
+                        ["?"] = "which_key"
                     },
                 },
+                prompt_prefix = " ",
+                selection_caret = " ", --  ⌕
             },
+            pickers = {
+                find_files = {
+                    theme = "dropdown",
+                }
+            },
+            extensions = {
+                ["ui-select"] = {
+                    require("telescope.themes").get_dropdown {
+                        -- even more opts
+                    }
+                }
+            }
         })
         telescope.load_extension("fzf")
+        telescope.load_extension("ui-select")
 
         -- set keymaps
         local keymap = vim.keymap -- for conciseness
@@ -35,4 +53,3 @@ return
         keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
     end,
 }
-
