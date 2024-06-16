@@ -2,14 +2,7 @@
 -- Plugin `mason-lspconfig` simplifies the integration of lspconfig with the `mason` plugin.
 -- Plugin `nvim-lspconfig` integrates various LSP servers.
 
-local language_servers = {
-    "lua_ls",
-    "clangd",
-    "html",
-    "tsserver",
-    "golangci_lint_ls",
-    "gopls",
-}
+local language_servers = require("settings").language_servers
 
 return
 {
@@ -35,13 +28,13 @@ return
                 automatic_installation = true,
             })
         end,
-        dependencies = {'williamboman/mason.nvim'}
+        dependencies = { 'williamboman/mason.nvim' }
     },
     {
         'neovim/nvim-lspconfig',
         enabled = true,
-        dependencies = {"williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
-        config = function ()
+        dependencies = { "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
+        config = function()
             -- Function to run when attaching to a new buffer with an LSP client.
             local on_attach = function(client, bufnr)
                 if client.name == "tsserver" then
@@ -126,7 +119,7 @@ return
             for _, language_server in pairs(language_servers) do
                 language_server = vim.split(language_server, "@")[1]
                 local require_ok, conf_opts = pcall(require, "plugins.language-settings." .. language_server)
-                if require_ok  then
+                if require_ok then
                     conf_opts = vim.tbl_deep_extend("keep", conf_opts, opts)
                     lspconfig[language_server].setup(conf_opts)
                 else
@@ -136,4 +129,3 @@ return
         end
     }
 }
-
