@@ -25,4 +25,3 @@ return
         comment.setup(opts)
     end,
 }
-
