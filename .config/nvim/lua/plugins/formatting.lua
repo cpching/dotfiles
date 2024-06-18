@@ -15,6 +15,7 @@ return
                 lua = { "stylua" },
                 python = { "isort", "black" },
                 javascript = { "prettier" },
+                typescript = { "prettier" },
                 go = { "gofmt" },
                 markdownlint = { "markdownlint" },
             },
