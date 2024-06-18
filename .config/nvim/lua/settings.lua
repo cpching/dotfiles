@@ -9,6 +9,7 @@ return {
         "lua_ls",
         "clangd",
         "html",
+        "cssls",
         "tsserver",
         "golangci_lint_ls",
         "gopls",
