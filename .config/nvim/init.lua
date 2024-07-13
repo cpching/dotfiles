@@ -16,3 +16,7 @@ vim.cmd('colorscheme ' .. settings.colorscheme)
 if vim.fn.has("autocmd") then
     vim.cmd([[ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif ]])
 end
+
+-- highlight yank selection
+vim.api.nvim_create_autocmd({ 'TextYankPost' },
+    { callback = function() vim.highlight.on_yank { higroup = "IncSearch", timeout = 300 } end })
