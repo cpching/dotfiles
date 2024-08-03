@@ -18,10 +18,5 @@ return
         autotag = {
             enable = true,
         },
-    },
-    config = function(_, opts)
-        local treesitter = require("nvim-treesitter.configs")
-        treesitter.setup(opts)
-    end
-
+    }
 }

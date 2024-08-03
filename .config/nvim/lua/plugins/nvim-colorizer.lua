@@ -11,9 +11,5 @@ return
             mode = 'foreground',
         },
         css = { rgb_fn = true, }
-    },
-    config = function(_, opts)
-        local colorizer = require("colorizer")
-        colorizer.setup(opts)
-    end
+    }
 }
