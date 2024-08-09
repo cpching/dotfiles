@@ -5,8 +5,8 @@ local keymap = vim.api.nvim_set_keymap
 function Close_buffer_or_window()
     vim.api.nvim_command('bn!')
     local success = pcall(vim.api.nvim_command, 'bd#')
-    -- Check if there is only one window left
-    if not success or #vim.api.nvim_list_wins() == 1 then
+    if not success then
+        print(#vim.api.nvim_list_wins())
         vim.api.nvim_command('q')
     end
 end
