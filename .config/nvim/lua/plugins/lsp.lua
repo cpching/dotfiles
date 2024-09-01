@@ -7,20 +7,6 @@ local language_servers = require("settings").language_servers
 return
 {
     {
-        "williamboman/mason.nvim",
-        enabled = true,
-        opts = {
-            ui = {
-                icons = {
-                    package_installed = "✓",
-                    package_pending = "➜",
-                    package_uninstalled = "✗",
-                },
-                border = "rounded",
-            },
-        }
-    },
-    {
         'williamboman/mason-lspconfig.nvim',
         opts = {
             ensure_installed = language_servers,
