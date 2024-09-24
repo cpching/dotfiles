@@ -16,32 +16,21 @@ return
     {
         'neovim/nvim-lspconfig',
         enabled = true,
+        keys = {
+            { "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>",                        noremap = true, silent = true, desc = "Go to declaration" },
+            { "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>",                         noremap = true, silent = true, desc = "Go to declaration" },
+            { "K",          "<cmd>lua vim.lsp.buf.hover()<CR>",                              noremap = true, silent = true },
+            { "gi",         "<cmd>lua vim.lsp.buf.implementation()<CR>",                     noremap = true, silent = true, desc = "Go to implementation" },
+            { "<C-s>",      "<cmd>lua vim.lsp.buf.signature_help()<CR>",                     noremap = true, silent = true },
+            { "gr",         "<cmd>lua vim.lsp.buf.references()<CR>",                         noremap = true, silent = true, desc = "Go to references" },
+            { "gl",         '<cmd>lua vim.diagnostic.open_float()<CR>',                      noremap = true, silent = true, desc = "Open diagnostic float" },
+            { "[e",         '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', noremap = true, silent = true, desc = "Prev error" },
+            { "]e",         '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', noremap = true, silent = true, desc = "Next error" },
+            { "<leader>q",  "<cmd>lua vim.diagnostic.setloclist()<CR>",                      noremap = true, silent = true, desc = "Set Location List" },
+            { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                             noremap = true, silent = true, desc = "Rename symbol" },
+        },
         dependencies = { "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
         config = function()
-            -- Function to run when attaching to a new buffer with an LSP client.
-            local on_attach = function(client, bufnr)
-                if client.name == "tsserver" then
-                    client.server_capabilities.documentFormattingProvider = false
-                end
-                -- Keymap options
-                local opts = { noremap = true, silent = true }
-                -- Keymap api
-                local buf_keymap = vim.api.nvim_buf_set_keymap
-                buf_keymap(bufnr, "n", "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-                buf_keymap(bufnr, "n", "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-                buf_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-                buf_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-                buf_keymap(bufnr, "n", "<C-s>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-                buf_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-                buf_keymap(bufnr, "n", "gl", '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-                buf_keymap(bufnr, "n", "[d", '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', opts)
-                buf_keymap(bufnr, "n", "]d", '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', opts)
-                buf_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-                buf_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-                vim.cmd [[ command! Format execute 'lua vim.lsp.buf.formatting()' ]]
-                -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-            end
-
             -- The `nvim-cmp` almost supports LSP's capabilities so You should advertise it to LSP servers..
             local capabilities
             local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -94,7 +83,7 @@ return
             })
 
             local opts = {
-                on_attach = on_attach,
+                -- on_attach = on_attach,
                 capabilities = capabilities,
             }
 
