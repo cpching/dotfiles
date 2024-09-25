@@ -15,8 +15,10 @@ end
 
 ------- ----- ----- ----- ----- ----- ----- ----- ----- ----- Normal ----- ----- ----- ----- ----- ------ ----- ----- ----- -----
 keymap("n", "<C-L>", ":update<CR>", opts)
-keymap("n", "<C-P>", "<CMD>bp!<CR>", opts)
-keymap("n", "<C-N>", "<CMD>bn!<CR>", opts)
+keymap("n", "<C-N>", "<CMD>BufferLineCycleNext<CR>", opts)
+keymap("n", "<C-P>", "<CMD>BufferLineCyclePrev<CR>", opts)
+keymap("n", "<M-n>", "<CMD>BufferLineMoveNext<CR>", opts)
+keymap("n", "<M-p>", "<CMD>BufferLineMovePrev<CR>", opts)
 -- keymap("n", "<S-w>", "<S-s>", opts) -- Clear the line, and start at the appropriate indentation level
 keymap("n", "<C-\\>", "<CMD>lua Close_buffer_or_window()<CR>", opts)
 keymap("n", "<UP>", "g<UP>", opts)
