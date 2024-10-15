@@ -4,100 +4,108 @@
 
 local language_servers = require("settings").language_servers
 
-return
-{
-    {
-        'williamboman/mason-lspconfig.nvim',
-        opts = {
-            ensure_installed = language_servers,
-            automatic_installation = true
-        }
-    },
-    {
-        'neovim/nvim-lspconfig',
-        enabled = true,
-        keys = {
-            { "<leader>gD", "<cmd>lua vim.lsp.buf.declaration()<CR>",                        noremap = true, silent = true, desc = "Go to declaration" },
-            { "<leader>gd", "<cmd>lua vim.lsp.buf.definition()<CR>",                         noremap = true, silent = true, desc = "Go to declaration" },
-            { "K",          "<cmd>lua vim.lsp.buf.hover()<CR>",                              noremap = true, silent = true },
-            { "gi",         "<cmd>lua vim.lsp.buf.implementation()<CR>",                     noremap = true, silent = true, desc = "Go to implementation" },
-            { "<C-s>",      "<cmd>lua vim.lsp.buf.signature_help()<CR>",                     noremap = true, silent = true },
-            { "gr",         "<cmd>lua vim.lsp.buf.references()<CR>",                         noremap = true, silent = true, desc = "Go to references" },
-            { "gl",         '<cmd>lua vim.diagnostic.open_float()<CR>',                      noremap = true, silent = true, desc = "Open diagnostic float" },
-            { "[e",         '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>', noremap = true, silent = true, desc = "Prev error" },
-            { "]e",         '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>', noremap = true, silent = true, desc = "Next error" },
-            { "<leader>q",  "<cmd>lua vim.diagnostic.setloclist()<CR>",                      noremap = true, silent = true, desc = "Set Location List" },
-            { "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>",                             noremap = true, silent = true, desc = "Rename symbol" },
-        },
-        dependencies = { "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
-        config = function()
-            -- The `nvim-cmp` almost supports LSP's capabilities so You should advertise it to LSP servers..
-            local capabilities
-            local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
-            if status_ok then
-                capabilities = cmp_nvim_lsp.default_capabilities()
-            end
+return {
+	{
+		"williamboman/mason-lspconfig.nvim",
+		opts = {
+			ensure_installed = language_servers,
+			automatic_installation = true,
+		},
+	},
+	{
+		"neovim/nvim-lspconfig",
+		enabled = true,
+        -- stylua: ignore
+		keys = {
+			{ "gD", vim.lsp.buf.declaration, noremap = true, silent = true, desc = "Go to Declaration", },
+			{ "gd", vim.lsp.buf.definition, noremap = true, silent = true, desc = "Go to Definition", },
+			{ "K", vim.lsp.buf.hover, noremap = true, silent = true, desc = "Hover", },
+			{ "gi", vim.lsp.buf.implementation, noremap = true, silent = true, desc = "Go to Implementation", },
+			{ "gK", vim.lsp.buf.signature_help, noremap = true, silent = true, desc = "Signature Help", },
+			{ "<C-S>", vim.lsp.buf.signature_help, mode = "i", noremap = true, silent = true, desc = "Signature Help", },
+			{ "gr", vim.lsp.buf.references, noremap = true, silent = true, desc = "Go to References", },
+			{ "gl", vim.diagnostic.open_float, noremap = true, silent = true, desc = "Open Diagnostic Float", },
+			{ "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action", mode = { "n", "v" }, },
+			{ "<leader>cl", vim.lsp.codelens.run, desc = "Run Codelens", mode = { "n", "v" }, },
+			{ "<leader>cL", vim.lsp.codelens.refresh, desc = "Refresh & Display Codelens", mode = { "n" }, },
+			{ "<leader>cr", vim.lsp.buf.rename, noremap = true, silent = true, desc = "Rename Symbol", },
+			{ "[e", vim.diagnostic.goto_prev, noremap = true, silent = true, desc = "Prev Error", },
+			{ "]e", vim.diagnostic.goto_next, noremap = true, silent = true, desc = "Next Error", },
+			{ "<leader>q", vim.diagnostic.setloclist, noremap = true, silent = true, desc = "Set Location List", },
+			-- TODO: Jump to pre/next same word
+		},
+		dependencies = { "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
+		opts = function()
+			local ret = {
+				diagnostics = {
+					virtual_text = {
+						spacing = 4,
+						source = "if_many",
+						prefix = "",
+						-- 
+					},
+					signs = {
+						text = {
+							[vim.diagnostic.severity.ERROR] = "",
+							[vim.diagnostic.severity.WARN] = "",
+							[vim.diagnostic.severity.HINT] = "",
+							[vim.diagnostic.severity.INFO] = "",
+						},
+						-- active = signs,
+					},
+					update_in_insert = true,
+					underline = true,
+					severity_sort = true,
+					float = {
+						focusable = true,
+						style = "minimal",
+						border = "rounded",
+						header = "",
+						prefix = "",
+					},
+				},
+			}
+			return ret
+		end,
+		config = function(_, opts)
+			-- The `nvim-cmp` almost supports LSP's capabilities so You should advertise it to LSP servers..
+			local capabilities
+			local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
+			if status_ok then
+				capabilities = cmp_nvim_lsp.default_capabilities()
+			end
 
-            local lspconfig = require('lspconfig')
+			-- Define diagnostic configuration for virtual text, signs, and float windows.
 
-            -- Define diagnostic signs for error, warning, hint, and info.
-            local signs = {
-                { name = "DiagnosticSignError", text = "" },
-                { name = "DiagnosticSignWarn", text = "" },
-                { name = "DiagnosticSignHint", text = "" },
-                { name = "DiagnosticSignInfo", text = "" },
-            }
-            for _, sign in ipairs(signs) do
-                vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-            end
+			-- Configure diagnostics with defined settings.
+			vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-            -- Define diagnostic configuration for virtual text, signs, and float windows.
-            local config = {
-                virtual_text = true,
-                signs = {
-                    active = signs,
-                },
-                update_in_insert = true,
-                underline = true,
-                severity_sort = true,
-                float = {
-                    focusable = true,
-                    style = "minimal",
-                    border = "rounded",
+			-- Customize hover and signature help handlers for LSP.
+			vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+				border = "rounded",
+			})
 
-                    header = "",
-                    prefix = "",
-                },
-            }
+			vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+				border = "rounded",
+			})
 
-            -- Configure diagnostics with defined settings.
-            vim.diagnostic.config(config)
+			local server_opts = {
+				-- on_attach = on_attach,
+				capabilities = capabilities,
+			}
 
-            -- Customize hover and signature help handlers for LSP.
-            vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-                border = "rounded",
-            })
-
-            vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-                border = "rounded",
-            })
-
-            local opts = {
-                -- on_attach = on_attach,
-                capabilities = capabilities,
-            }
-
-            -- Setup LSP servers based on predefined configurations.
-            for _, language_server in pairs(language_servers) do
-                language_server = vim.split(language_server, "@")[1]
-                local require_ok, conf_opts = pcall(require, "plugins.language-settings." .. language_server)
-                if require_ok then
-                    conf_opts = vim.tbl_deep_extend("keep", conf_opts, opts)
-                    lspconfig[language_server].setup(conf_opts)
-                else
-                    lspconfig[language_server].setup(opts)
-                end
-            end
-        end
-    }
+			-- Setup LSP servers based on predefined configurations.
+			for _, language_server in pairs(language_servers) do
+				language_server = vim.split(language_server, "@")[1]
+				local lspconfig = require("lspconfig")
+				local require_ok, conf_opts = pcall(require, "plugins.language-settings." .. language_server)
+				if require_ok then
+					conf_opts = vim.tbl_deep_extend("keep", conf_opts, server_opts)
+					lspconfig[language_server].setup(conf_opts)
+				else
+					lspconfig[language_server].setup(server_opts)
+				end
+			end
+		end,
+	},
 }

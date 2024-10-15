@@ -38,7 +38,7 @@ return
                 completeopt = "menu,menuone,preview,noselect",
             },
             experimental = {
-                ghost_text = true,
+                ghost_text = false,
             },
             snippet = {
                 -- REQUIRED - you must specify a snippet engine

@@ -1,18 +1,20 @@
 return {
-    colorscheme = "nord", --[[
+    colorscheme = "tokyonight", --[[
                                 Colorschemes:
                                 - nord
                                 - kanagawa
                                 - tokyonight
+                                - gruvbox
                             ]]
     language_servers = {
         "lua_ls",
         "clangd",
         "html",
         "cssls",
-        "tsserver",
-        "golangci_lint_ls",
+        "ts_ls",
         "gopls",
+        "emmet_ls",
+        "eslint"
     },
     language_parsers = {
         "bash",
@@ -41,4 +43,20 @@ return {
         "xml",
         "yaml",
     },
+    linters = {
+        html = { "htmlhint" },
+        javascript = { "eslint" },
+        python = { "pylint" },
+        go = { "golangcilint" },
+    },
+    formatters = {
+        lua = { "stylua" },
+        python = { "isort", "black" },
+        javascript = { "prettier" },
+        html = { "prettier" },
+        typescript = { "prettier" },
+        go = { "gofmt" },
+        markdownlint = { "markdownlint" },
+        cpp = { "ast-grep" },
+    }
 }

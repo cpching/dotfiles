@@ -1,24 +1,25 @@
-local options =
-{
-	number = true,
-    relativenumber = true,
-	smartindent = true,
-	smartcase = true,
-	termguicolors = true,
-	ruler = true,
-	cursorline = true,
-	encoding = "UTF-8",
-	fileencodings = "utf-8",
-	smarttab = true,
-	expandtab = true,
-	shiftwidth = 4,
-	tabstop = 4,
-	hidden = false,
-	mouse="i",
-    statuscolumn = "%s%2r  %2l ", -- ▎
-    signcolumn = "yes"
-}
-
-for key, value in pairs(options) do
-	vim.opt[key] = value
-end
+local opt = vim.opt
+opt.number = true
+opt.relativenumber = true
+opt.smartindent = true
+opt.smartcase = true
+opt.linebreak = true
+opt.termguicolors = true
+opt.ruler = true
+opt.cursorline = true
+opt.ignorecase = true
+opt.smartcase = true
+opt.encoding = "utf-8"
+opt.fileencodings = "utf-8"
+opt.smarttab = true
+opt.expandtab = true
+opt.shiftwidth = 4
+opt.tabstop = 4
+opt.hidden = true
+opt.mouse = "i"
+opt.statuscolumn = [[%!v:lua.require'util.ui'.statuscolumn()]]
+opt.signcolumn = "yes"
+opt.linebreak = true
+opt.undofile = true
+opt.showmode = false
+opt.laststatus = 3 -- global statusline

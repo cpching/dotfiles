@@ -8,7 +8,6 @@ return
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
     dependencies = {
-        -- "windwp/nvim-ts-autotag",
         "nvim-treesitter/nvim-treesitter-textobjects",
     },
     opts = {
@@ -91,8 +90,8 @@ return
 
                     -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
                     -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-                    ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-                    ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+                    -- ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+                    -- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
                 },
                 goto_next_end = {
                     ["]F"] = { query = "@call.outer", desc = "Next function call end" },
@@ -116,6 +115,15 @@ return
                     ["[L"] = { query = "@loop.outer", desc = "Prev loop end" },
                 },
             },
+            --[[ lsp_interop = {
+                enable = true,
+                border = 'none',
+                floating_preview_opts = {},
+                peek_definition_code = {
+                    ["<leader>df"] = "@function.outer",
+                    ["<leader>dF"] = "@class.outer",
+                },
+            }, ]]
         },
         -- enable indentation
         -- enable autotagging (w/ nvim-ts-autotag plugin)
