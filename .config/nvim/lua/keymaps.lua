@@ -66,7 +66,7 @@ keymap("n", "<leader>k", "<c-w>wk", { desc = "Move to Window Above", noremap = t
 keymap("n", "<leader>l", "<c-w>wl", { desc = "Move to Window Right", noremap = true, silent = true })
 keymap("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", noremap = true, silent = true })
 keymap("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", noremap = true, silent = true })
-keymap("n", "<leader>w", "<C-W>c", { desc = "Delete Window", noremap = true, silent = true })
+-- keymap("n", "<leader>w", "<C-W>c", { desc = "Delete Window", noremap = true, silent = true })
 
 -- tabs
 keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", { desc = "Last Tab", noremap = true, silent = true })

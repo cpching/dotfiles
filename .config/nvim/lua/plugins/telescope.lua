@@ -54,15 +54,16 @@ return {
 			{ "<leader>:", "<cmd>Telescope command_history<cr>", desc = "Command History" },
 
 			{
-				"<leader>fb",
+				"<leader>ft",
 				"<cmd>Telescope buffers sort_mru=true sort_lastused=true<cr>",
-				desc = "Switch Buffer",
+				desc = "Find Buffer",
 			},
 			{ "<leader>fF", Util.pick("files"), desc = "Find Files (Root Dir)" },
-			{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (cwd)" },
+			{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files (Current Dir)" },
 			{ "<leader>fr", "<cmd>Telescope oldfiles<cr>", desc = "Recent" },
-			{ "<leader>fR", Util.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (cwd)" },
+			{ "<leader>fR", Util.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (Current Dir)" },
 			{ "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
+			{ "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "File Browser" },
 
 			{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
 			{ "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
@@ -73,8 +74,8 @@ return {
 			{ "<leader>sc", "<cmd>Telescope commands<cr>", desc = "Commands" },
 			{ "<leader>sd", "<cmd>Telescope diagnostics bufnr=0<cr>", desc = "Document Diagnostics" },
 			{ "<leader>sD", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
-			{ "<leader>s/", Util.pick("live_grep"), desc = "Grep (Root Dir)" },
-			{ "<leader>ss", "<cmd>Telescope live_grep<cr>", desc = "Search String (cwd)" },
+			{ "<leader>sS", Util.pick("live_grep"), desc = "Grep (Root Dir)" },
+			{ "<leader>ss", "<cmd>Telescope live_grep<cr>", desc = "Search String (Current Dir)" },
 			{ "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help Pages" },
 			{ "<leader>sH", "<cmd>Telescope highlights<cr>", desc = "Search Highlight Groups" },
 			{ "<leader>sj", "<cmd>Telescope jumplist<cr>", desc = "Jumplist" },
@@ -101,10 +102,8 @@ return {
 		},
 
 		opts = function()
-			local telescope = require("telescope")
 			local actions = require("telescope.actions")
-			telescope.load_extension("fzf")
-			telescope.load_extension("ui-select")
+			local fb_actions = require("telescope._extensions.file_browser.actions")
 
 			local function find_command()
 				if 1 == vim.fn.executable("rg") then
@@ -128,8 +127,6 @@ return {
 							["<M-j>"] = actions.move_selection_next, -- move to next result
 							["<M-k>"] = actions.move_selection_previous, -- move to prev result
 							["?"] = "which_key",
-							["<C-f>"] = actions.preview_scrolling_down,
-							["<C-b>"] = actions.preview_scrolling_up,
 						},
 						n = {
 							["q"] = actions.close,
@@ -146,14 +143,38 @@ return {
 					},
 				},
 				extensions = {
-					["ui-select"] = {
+					--[[ ["ui-select"] = {
 						require("telescope.themes").get_dropdown({
 							-- even more opts
 						}),
+					}, ]]
+
+					file_browser = {
+						sorting_strategy = "ascending",
+						layout_config = {
+							horizontal = {
+								prompt_position = "top",
+								preview_width = 0.3,
+								height = 0.75,
+							},
+						},
+						mappings = { ["n"] = { ["u"] = fb_actions.goto_parent_dir } },
+						initial_mode = "normal",
 					},
 				},
 			}
 		end,
+		config = function(_, opts)
+			local telescope = require("telescope")
+			telescope.setup(opts)
+			telescope.load_extension("fzf")
+			telescope.load_extension("ui-select")
+			telescope.load_extension("file_browser")
+		end,
+	},
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	},
 	-- Flash Telescope config
 	{

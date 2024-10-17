@@ -324,12 +324,13 @@ return {
 					header = vim.split(logo, "\n"),
                     -- stylua: ignore
                     center = {
+                        { action = 'Telescope file_browser', desc = "File Browser", icon = "龎 ", key = "b" },
                         { action = 'lua require("persistence").load()', desc = " Restore Session", icon = " ", key = "r" },
                         { action = "Telescope find_files", desc = " Find File (Current Dir)", icon = " ", key = "f" },
                         { action = 'lua Util.pick("files")()', desc = " Find File (Root Dir)", icon = " ", key = "F" },
                         { action = "ene | startinsert", desc = " New File", icon = " ", key = "n" },
                         { action = "Telescope live_grep", desc = " Find Text (Current Dir)", icon = " ", key = "/" },
-                        { action = 'lua Util.pick("live_grep")()', desc = " Find text (Root Dir)", icon = " ", key = "?" },
+                        { action = 'lua Util.pick("live_grep")()', desc = " Find text (Root Dir)", icon = " ", key = "?" },
                         { action = "Telescope oldfiles", desc = " Recent Files", icon = " ", key = "R" },
                         { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit", icon = " ", key = "q" },
                         -- { action = 'lua Util.pick.config_files()()', desc = " Config", icon = " ", key = "c" },
