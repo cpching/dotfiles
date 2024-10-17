@@ -2,7 +2,7 @@
 -- Plugin `mason-lspconfig` simplifies the integration of lspconfig with the `mason` plugin.
 -- Plugin `nvim-lspconfig` integrates various LSP servers.
 
-local language_servers = require("settings").language_servers
+local language_servers = Config.settings.language_servers
 
 return {
 	{

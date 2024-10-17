@@ -1,6 +1,6 @@
 -- Plugin `nvim-lint` highlights syntax errors, style issues, and potential bugs in real-time.
 
-local linters = require("settings").linters
+local linters = Config.settings.linters
 
 return {
 	"mfussenegger/nvim-lint",

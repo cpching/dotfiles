@@ -149,6 +149,7 @@ return {
 						}),
 					}, ]]
 
+					-- TODO: Result Title
 					file_browser = {
 						sorting_strategy = "ascending",
 						layout_config = {

@@ -1,6 +1,6 @@
 --
 
-local language_parsers = require("settings").language_parsers
+local language_parsers = Config.settings.language_parsers
 
 return {
 	{

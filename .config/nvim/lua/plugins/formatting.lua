@@ -1,6 +1,6 @@
 -- Plugin `conform` automatically formats code and enforces style rules.
 
-local formmaters = require("settings").formatters
+local formmaters = Config.settings.formatters
 return
 {
     'stevearc/conform.nvim',
