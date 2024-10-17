@@ -7,6 +7,7 @@ local language_servers = require("settings").language_servers
 return {
 	{
 		"williamboman/mason-lspconfig.nvim",
+		event = "VeryLazy",
 		opts = {
 			ensure_installed = language_servers,
 			automatic_installation = true,
@@ -31,8 +32,7 @@ return {
 			{ "<leader>cr", vim.lsp.buf.rename, noremap = true, silent = true, desc = "Rename Symbol", },
 			{ "[e", vim.diagnostic.goto_prev, noremap = true, silent = true, desc = "Prev Error", },
 			{ "]e", vim.diagnostic.goto_next, noremap = true, silent = true, desc = "Next Error", },
-			{ "<leader>q", vim.diagnostic.setloclist, noremap = true, silent = true, desc = "Set Location List", },
-			-- TODO: Jump to pre/next same word
+			{ "<leader>e", vim.diagnostic.setloclist, noremap = true, silent = true, desc = "Set Location List", },
 		},
 		dependencies = { "williamboman/mason-lspconfig.nvim", "williamboman/mason.nvim", "hrsh7th/cmp-nvim-lsp" },
 		opts = function()

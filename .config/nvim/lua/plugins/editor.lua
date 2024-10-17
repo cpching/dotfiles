@@ -1,12 +1,3 @@
-vim.api.nvim_create_autocmd("BufEnter", {
-	nested = true,
-	callback = function()
-		if #vim.api.nvim_list_wins() == 1 and require("nvim-tree.utils").is_nvim_tree_buf() then
-			vim.cmd("quit")
-		end
-	end,
-})
-
 vim.g.nvim_tree_icons = {
 	git = {
 		unstaged = "",
@@ -44,14 +35,18 @@ return {
 		keys = {
 			{ "<leader><leader>", "<CMD>NvimTreeToggle<CR>", desc = "Toggle Nvim Tree" },
 		},
+		-- deactivate = function()
+		-- 	vim.cmd([[NvimTreeClose]])
+		-- end,
 		opts = {
+			auto_close = true,
 			on_attach = on_attach,
 			view = {
 				width = 25,
 			},
 			actions = {
 				open_file = {
-					quit_on_open = true,
+					quit_on_open = false,
 					window_picker = {
 						enable = false,
 					},
@@ -94,8 +89,6 @@ return {
             { "[t", function() require("todo-comments").jump_prev() end, desc = "Previous Todo Comment" },
             { "<leader>xt", "<cmd>Trouble todo toggle<cr>", desc = "Todo (Trouble)" },
             { "<leader>xT", "<cmd>Trouble todo toggle filter = {tag = {TODO,FIX,FIXME}}<cr>", desc = "Todo/Fix/Fixme (Trouble)" },
-            { "<leader>st", "<cmd>TodoTelescope<cr>", desc = "Todo" },
-            { "<leader>sT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<cr>", desc = "Todo/Fix/Fixme" },
         },
 	},
 
@@ -130,11 +123,36 @@ return {
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		vscode = true,
-		opts = {},
+		opts = {
+			modes = {
+				char = {
+					-- enabled = false,
+					config = function(opts)
+						-- autohide flash when in operator-pending mode
+						opts.autohide = opts.autohide
+							or (
+								vim.fn.mode(true):find("no")
+								and (vim.v.operator == "c" or vim.v.operator == "d" or vim.v.operator == "y")
+							)
+
+						-- disable jump labels when not enabled, when using a count,
+						-- or when recording/executing registers
+						opts.jump_labels = opts.jump_labels
+							and vim.v.count == 0
+							and vim.fn.reg_executing() == ""
+							and vim.fn.reg_recording() == ""
+
+						-- Show jump labels only in operator-pending mode
+						-- opts.jump_labels = vim.v.count == 0 and vim.fn.mode(true):find("o")
+					end,
+					highlight = { backdrop = false },
+				},
+			},
+		},
         -- stylua: ignore
         keys = {
-            { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
-            { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+            -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+            -- { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
             { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
             { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
             { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
@@ -249,5 +267,68 @@ return {
 			},
 		},
 	},
-	-- TODO: which-key
+	{
+		"stevearc/aerial.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-tree/nvim-web-devicons",
+		},
+		opts = {
+			layout = {
+				max_width = { 40, 0.2 },
+				width = nil,
+				min_width = 30,
+			},
+			on_attach = function(bufnr)
+				-- Jump forwards/backwards with '{' and '}'
+				-- vim.keymap.set("n", "{", "<cmd>AerialPrev<CR>", { buffer = bufnr })
+				-- vim.keymap.set("n", "}", "<cmd>AerialNext<CR>", { buffer = bufnr })
+			end,
+		},
+		config = function(_, opts)
+			local aerial = require("aerial")
+
+			aerial.setup(opts)
+			-- You probably also want to set a keymap to toggle aerial
+			vim.keymap.set("n", "<leader>co", "<cmd>AerialToggle!<CR>", { desc = "Toggle Outline" })
+		end,
+	},
+	{
+		"RRethy/vim-illuminate",
+		enable = false,
+		event = { "BufReadPost", "BufWritePost", "BufNewFile" },
+		opts = {
+			delay = 50,
+			large_file_cutoff = 2000,
+			large_file_overrides = {
+				providers = { "lsp" },
+			},
+			filetypes_denylist = { "NvimTree" },
+		},
+		keys = {
+			{ "]]", desc = "Next Reference" },
+			{ "[[", desc = "Prev Reference" },
+		},
+		config = function(_, opts)
+			require("illuminate").configure(opts)
+
+			local function map(key, dir, buffer)
+				vim.keymap.set("n", key, function()
+					require("illuminate")["goto_" .. dir .. "_reference"](false)
+				end, { desc = dir:sub(1, 1):upper() .. dir:sub(2) .. " Reference", buffer = buffer })
+			end
+
+			map("]]", "next")
+			map("[[", "prev")
+
+			-- also set it after loading ftplugins, since a lot overwrite [[ and ]]
+			vim.api.nvim_create_autocmd("FileType", {
+				callback = function()
+					local buffer = vim.api.nvim_get_current_buf()
+					map("]]", "next", buffer)
+					map("[[", "prev", buffer)
+				end,
+			})
+		end,
+	},
 }
