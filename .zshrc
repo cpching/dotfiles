@@ -158,21 +158,31 @@ export PATH="/usr/local/opt/unzip/bin:$PATH"
 
 export PATH=${HOME}/go/bin:$PATH
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+ export PYENV_ROOT="$HOME/.pyenv"
+ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+ eval "$(pyenv init -)"
+ # eval "$(pyenv virtualenv-init -)"
+ 
+ # python virtualenv 
+ source ~/PythonEnv/python@3.12/bin/activate
 
-# Restore tmux session
-SESSION=note-app
-# tmux has-session -t $SESSIONNAME &> /dev/null
 
-# if [ $? != 0 ] 
-# then
-#    tmux new-session -s $SESSIONNAME -n script -d
-#    tmux send-keys -t $SESSIONNAME "~/bin/note-app" C-m 
-# fi
+alias config='/usr/bin/git --git-dir=$HOME/dotfiles/ --work-tree=$HOME'
+eval "$(fzf --zsh)"
 
-# tmux attach -t $SESSIONNAME
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+export FZF_DEFAULT_OPTS="--height 40% --reverse --border --bind=ALT-j:down,ALT-k:up"
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+  --color=fg:#d0d0d0,fg+:#d0d0d0,bg:#121212,bg+:#262626
+  --color=hl:#5f87af,hl+:#5fd7ff,info:#afaf87,marker:#e35454
+  --color=prompt:#0084d6,spinner:#af5fff,pointer:#d7e355,header:#87afaf
+  --color=border:#262626,label:#aeaeae,query:#d9d9d9
+  --border="rounded" --border-label="" --preview-window="border-rounded" --prompt="> "
+  --marker=">" --pointer=">" --separator="─" --scrollbar="│"
+  --info="right"'
 
-alias config='/usr/bin/git --git-dir=/Users/pinchingchen/dotfiles/ --work-tree=/Users/pinchingchen'
+# Created by `pipx` on 2024-08-17 03:18:13
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/util"
