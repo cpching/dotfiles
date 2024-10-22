@@ -1,0 +1,4 @@
+plugins/
+.gitmux.conf
+tmux.conf.nord
+colorscheme/nord.conf
