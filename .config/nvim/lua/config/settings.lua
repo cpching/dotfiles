@@ -15,6 +15,7 @@ return {
 		"gopls",
 		"emmet_ls",
 		"eslint",
+		"omnisharp",
 	},
 	language_parsers = {
 		"bash",

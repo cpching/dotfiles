@@ -14,7 +14,6 @@ require("plugin-manager")
 local settings = Config.settings
 
 -- set colorscheme
-print(settings.colorscheme)
 vim.cmd("colorscheme " .. settings.colorscheme)
 
 -- vim.cmd([[highlight WinSeparator guifg=#1e222a guibg=NONE]])
