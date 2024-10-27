@@ -17,5 +17,5 @@ local settings = Config.settings
 print(settings.colorscheme)
 vim.cmd("colorscheme " .. settings.colorscheme)
 
-vim.cmd([[highlight WinSeparator guifg=#1e222a guibg=NONE]])
-vim.cmd([[highlight NvimTreeNormal guibg=#1c2028]])
+-- vim.cmd([[highlight WinSeparator guifg=#1e222a guibg=NONE]])
+-- vim.cmd([[highlight Normal guibg=]])

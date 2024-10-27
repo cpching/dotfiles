@@ -1,6 +1,6 @@
 return {
 	"williamboman/mason.nvim",
-	event = "VeryLazy",
+	-- event = "VeryLazy",
 	enabled = true,
 	opts = {
 		ui = {

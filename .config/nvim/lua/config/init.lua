@@ -1,7 +1,7 @@
 local Config = {}
-require("config.autocmds")
 require("config.keymaps")
 require("config.options")
+require("config.autocmds")
 Config.settings = require("config.settings")
 Config.icons = {
 	misc = {

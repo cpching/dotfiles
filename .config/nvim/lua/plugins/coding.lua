@@ -13,6 +13,8 @@ return {
 		opts = {},
 	},
 	{
+		-- TODO: toggle in INSERT mode
+		-- TODO: cursor postion after Comment
 		"numToStr/Comment.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		dependencies = {

@@ -1,7 +1,10 @@
+-- TODO: adjust the `layout_config`
 local picker = {
 	name = "telescope",
 	commands = {
 		files = "find_files",
+		-- TODO: file browser
+		browser = "file_browser",
 	},
 	-- this will return a function that calls telescope.
 	-- cwd will default to lazyvim.util.get_root
@@ -30,6 +33,8 @@ local picker = {
 		end
 
 		require("telescope.builtin")[builtin](opts)
+		-- FIX: telescope extensions loading error `file_browser` can't be called
+		-- require("telescope.extensions")[builtin](opts)
 	end,
 }
 if not Util.pick.register(picker) then
@@ -64,6 +69,7 @@ return {
 			{ "<leader>fR", Util.pick("oldfiles", { cwd = vim.uv.cwd() }), desc = "Recent (Current Dir)" },
 			{ "<leader>fg", "<cmd>Telescope git_files<cr>", desc = "Find Files (git-files)" },
 			{ "<leader>fb", "<cmd>Telescope file_browser<cr>", desc = "File Browser" },
+			{ "<leader>fc", Util.pick.config_files(), desc = "Config Files" },
 
 			{ "<leader>gc", "<cmd>Telescope git_commits<CR>", desc = "Commits" },
 			{ "<leader>gs", "<cmd>Telescope git_status<CR>", desc = "Status" },
@@ -121,7 +127,7 @@ return {
 
 			return {
 				defaults = {
-					path_display = { "smart" },
+					-- path_display = { "smart" },
 					mappings = {
 						i = {
 							["<M-j>"] = actions.move_selection_next, -- move to next result
@@ -148,7 +154,13 @@ return {
 							-- even more opts
 						}),
 					}, ]]
-
+					fzf = {
+						fuzzy = true, -- false will only do exact matching
+						override_generic_sorter = true, -- override the generic sorter
+						override_file_sorter = true, -- override the file sorter
+						case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+						-- the default case_mode is "smart_case"
+					},
 					-- TODO: Result Title
 					file_browser = {
 						sorting_strategy = "ascending",
@@ -161,6 +173,7 @@ return {
 						},
 						mappings = { ["n"] = { ["u"] = fb_actions.goto_parent_dir } },
 						initial_mode = "normal",
+						-- results_title = vim.uv.cwd(),
 					},
 				},
 			}
@@ -176,7 +189,9 @@ return {
 	{
 		"nvim-telescope/telescope-file-browser.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+		enabled = true,
 	},
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 	-- Flash Telescope config
 	{
 		"nvim-telescope/telescope.nvim",

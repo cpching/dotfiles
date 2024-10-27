@@ -22,6 +22,21 @@ vim.keymap.set("v", "p", function()
 end, opts)
 --
 
+-- Function to delete a specific mark
+function DeleteMark()
+	print("Press a mark key to delete")
+
+	-- Get a single character from the user
+	local char = vim.fn.getchar()
+
+	-- Convert the character to a string
+	local key = vim.fn.nr2char(char)
+
+	-- Delete the specified mark
+	vim.cmd("delmarks " .. key)
+	print("Deleted mark `" .. key .. "`")
+end
+
 ------- ----- ----- ----- ----- ----- ----- ----- ----- ----- Normal ----- ----- ----- ----- ----- ------ ----- ----- ----- -----
 keymap("n", "<C-L>", ":update<CR>", opts)
 keymap("n", "<C-N>", "<CMD>BufferLineCycleNext<CR>", opts)
@@ -50,7 +65,7 @@ keymap("n", "<M-k>", ":m .-2<CR>==", opts) -- Move text up
 keymap("n", "<M-v>", "<CMD>set paste<CR>i<C-R>+<C-O><CMD>set paste!<CR><ESC>", opts)
 keymap("n", "<C-U>", "<C-U>zz", opts)
 keymap("n", "<C-D>", "<C-D>zz", opts)
--- keymap("n", "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and Clear hlsearch" })
+keymap("n", "<leader>dm", ":lua DeleteMark()<CR>", { desc = "Delete Following Mark", noremap = true, silent = true })
 
 -- session
 keymap("n", "<leader>qq", "<CMD>wqa<CR>", { desc = "Quit All", noremap = true, silent = true })
@@ -85,6 +100,7 @@ keymap("i", "<C-V>", "<C-O><CMD>set paste<CR><C-R>+<C-O><CMD>set paste!<CR>", op
 keymap("i", "<C-L>", "<C-O>:update<CR>", opts)
 keymap("i", "<UP>", "<C-O>g<UP>", opts)
 keymap("i", "<DOWN>", "<C-O>g<DOWN>", opts)
+keymap("i", "<C-E>", "<C-O>$", { desc = "Jump to End of Line", noremap = true, silent = true })
 
 -- Add undo break-points
 keymap("i", ",", ",<c-g>u", opts)

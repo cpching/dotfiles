@@ -40,7 +40,7 @@ function M.detectors.lsp(buf)
 		end
 	end ]]
 	return vim.tbl_filter(function(path)
-		path = M.norm(path)
+		-- path = M.norm(path)
 		return path and bufpath:find(path, 1, true) == 1
 	end, roots)
 end
@@ -76,7 +76,8 @@ function M.realpath(path)
 		return nil
 	end
 	path = vim.uv.fs_realpath(path) or path
-	return M.norm(path)
+	-- return M.norm(path)
+	return path
 end
 
 ---@param spec LazyRootSpec

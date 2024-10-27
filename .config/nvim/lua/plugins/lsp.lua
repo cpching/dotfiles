@@ -7,7 +7,7 @@ local language_servers = Config.settings.language_servers
 return {
 	{
 		"williamboman/mason-lspconfig.nvim",
-		event = "VeryLazy",
+		-- event = "VeryLazy",
 		opts = {
 			ensure_installed = language_servers,
 			automatic_installation = true,

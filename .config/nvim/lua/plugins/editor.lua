@@ -39,7 +39,6 @@ return {
 		-- 	vim.cmd([[NvimTreeClose]])
 		-- end,
 		opts = {
-			auto_close = true,
 			on_attach = on_attach,
 			view = {
 				width = 25,
