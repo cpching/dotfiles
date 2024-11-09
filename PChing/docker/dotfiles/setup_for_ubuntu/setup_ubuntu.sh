@@ -44,7 +44,6 @@ verbose_log() {
     else
         echo "$1" >> "$LOGFILE"  # Only log to the file if not verbose
         fi
-    }
 }
 
 initialize_setup() {
