@@ -156,15 +156,7 @@ install_nvim() {
     else
         log "Installing Neovim v0.10..."
         if [ "$USE_SUDO" = true ]; then
-            sudo apt install -y wget
-            wget https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.deb
-            sudo apt install ./nvim-linux64.deb
-            rm ./nvim-linux64.deb
         else
-            apt install -y wget
-            wget https://github.com/neovim/neovim/releases/download/v0.10.0/nvim-linux64.deb
-            apt install ./nvim-linux64.deb
-            rm ./nvim-linux64.deb
         fi
         log "Neovim v0.10 installation completed."
     fi
@@ -203,11 +195,13 @@ install_app "zsh"
 install_app "git"
 install_app "curl"
 install_app "autojump"
+install_app "wget"
+install_app "nvim"
 configure_zsh
 
 # Install fzf, fd, and Neovim
 install_fzf
 install_fd
-install_nvim
+# install_nvim
 configure_fzf
 
