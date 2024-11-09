@@ -155,9 +155,8 @@ install_nvim() {
         verbose_log "Neovim v0.10 is already installed."
     else
         log "Installing Neovim v0.10..."
-        if [ "$USE_SUDO" = true ]; then
-        else
-        fi
+        # if [ "$USE_SUDO" = true ]; then
+        # fi
         log "Neovim v0.10 installation completed."
     fi
 }
