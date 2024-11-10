@@ -149,17 +149,34 @@ install_fd() {
     fi
 }
 
-# Install Neovim 0.10
-install_nvim() {
-    if command_exists nvim && nvim --version | grep -q "NVIM v0.10"; then
-        verbose_log "Neovim v0.10 is already installed."
+# Function to install Neovim from source
+install_neovim() {
+    log "Setting up temporary directory for Neovim installation..."
+    TEMP_DIR="$HOME/tmp"
+    mkdir -p "$TEMP_DIR"
+    cd "$TEMP_DIR" || exit
+
+    log "Cloning Neovim repository..."
+    if [ -d "neovim" ]; then
+        rm -rf "neovim"
+    fi
+    git clone https://github.com/neovim/neovim.git
+    cd neovim || exit
+
+    log "Checking out Neovim release-0.10..."
+    git checkout release-0.10
+
+    log "Building Neovim..."
+    make CMAKE_BUILD_TYPE=Release
+
+    log "Installing Neovim..."
+    if [ "$USE_SUDO" = true ]; then
+        sudo make install
     else
-        log "Installing Neovim v0.10..."
-        # if [ "$USE_SUDO" = true ]; then
-        # fi
-        log "Neovim v0.10 installation completed."
+        make install
     fi
 }
+
 
 configure_fzf() {
     # Configure fzf to use fd in .zshrc
@@ -187,6 +204,34 @@ if command_exists "fd"; then
 fi
 }
 
+# Function to install .NET SDK 8.0
+install_dotnet() {
+    if command_exists dotnet && dotnet --version | grep -q '^8\.'; then
+        log ".NET 8.0 is already installed."
+    else
+        log "Installing .NET SDK 8.0..."
+        
+        # Add Microsoft package signing key and package repository
+        if [ "$USE_SUDO" = true ]; then
+            sudo apt install -y wget gpg
+            wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
+            sudo dpkg -i packages-microsoft-prod.deb
+            rm packages-microsoft-prod.deb
+            sudo apt update
+            sudo apt install -y dotnet-sdk-8.0
+        else
+            apt install -y wget gpg
+            wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb
+            dpkg -i packages-microsoft-prod.deb
+            rm packages-microsoft-prod.deb
+            apt update
+            apt install -y dotnet-sdk-8.0
+        fi
+        
+        log ".NET SDK 8.0 installation completed."
+    fi
+}
+
 # echo "Updating and upgrading system packages..."
 initialize_setup
 echo "Installing essential packages..."
@@ -195,12 +240,21 @@ install_app "git"
 install_app "curl"
 install_app "autojump"
 install_app "wget"
-install_app "nvim"
+install_app "npm"
 configure_zsh
 
-# Install fzf, fd, and Neovim
+# Install fzf and fd
 install_fzf
 install_fd
-# install_nvim
 configure_fzf
+
+# Install neovim required dependencies
+dependencies=(ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen)
+for dep in "${dependencies[@]}"; do
+    install_app "$dep"
+done
+# Install neovim and plugins' dependencies
+install_neovim
+install_ripgrep
+install_dotnet
 
